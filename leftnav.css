@@ -1,0 +1,70 @@
+h1
+{
+	margin-bottom: 0;
+	text-align: center;
+}
+
+ul
+{
+	margin-left: 0;
+}
+
+ul li
+{
+	margin-left: 2px;
+	color: red;
+}
+
+.NavBarTitle
+{
+	font-family: verdana,arial,serif;
+	background-color: #9999FF;
+	border: thin solid white;
+	padding: 1;
+}
+.NavBarTitle
+{
+	font-family: verdana,arial,serif;
+	background-color: #9999FF;
+	color: #CC0033;
+	font-size: 10pt;
+	font-weight: bold;
+	text-decoration: none;
+}
+.NavBarItem
+{
+	font-family: verdana,arial,serif;
+	background-color: #9999FF;
+	color: #0000CC;
+	font-size: 8pt;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+BODY
+{
+	font-family: verdana,arial,serif;
+	background-color: #9999FF;
+	margin-left: 0;
+}
+
+.menutxt
+{
+	font-family: Arial ;
+	font-size: 0.7 em ;
+	color: #000000 ;
+	text-decoration: none ;
+}
+
+.dhtmlMenu
+{
+	margin-left: 1em;
+}
+
+.version
+{
+	text-align: center;
+	font-size: 0.8em;
+	font-style: italic;
+	margin-top: 0;
+}

@@ -1,0 +1,24 @@
+NOTES on non-intuitive stuff:
+
+For devices_rack, the pending_status column holds change information.
+Its values essentially determine what is viewed and what will happen on a
+commit or rollback.
+
+The three statuses are 0, 1, 2.
+
+0 - nothing has changed
+  Shown: Always.
+  Commit: No change.
+  Rollback: No change.
+1 - This device was ADDED (or is the new position if a move).
+  Shown: Currently.
+  Commit: pending_status set to 0.
+  Rollback: device record removed.
+2 - This device was REMOVED (or is the old position of a move).
+  Shown: No.
+  Commit: device record removed.
+  Rollback: pending_status set back to 0.
+
+The only exception to this is if a devices_rack entry already has a
+dr_pending_status of 1, in which case it will be immediately deleted when the
+"remove" link is clicked.

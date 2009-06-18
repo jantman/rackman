@@ -1,0 +1,163 @@
+body
+{
+	background-color: #FFFF99;
+}
+
+h1
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	font-size: 1.8em;
+	font-variant: small-caps;
+}
+
+h2
+{
+	font-size: 1.4em;
+}
+
+table
+{
+    border-width: 1px 1px 1px 1px;
+    border-spacing: 0px;
+    border-style: solid solid solid solid;
+    border-color: black black black black;
+    border-collapse: separate;
+}
+table th 
+{
+    border-width: 1px 1px 1px 1px;
+    padding: 2px 2px 2px 2px;
+    border-style: solid solid solid solid;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+}
+table td 
+{
+    border-width: 1px 1px 1px 1px;
+    padding: 1px 1px 1px 1px;
+    border-style: solid solid solid solid;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+}
+
+table.rackTable
+{
+    border-width: 1px 1px 1px 1px;
+    border-spacing: 0px;
+    border-style: solid solid solid solid;
+    border-color: black black black black;
+    border-collapse: separate;
+    background-color: white;
+    margin-left:auto;
+    margin-right:auto;
+}
+table.rackTable th 
+{
+    border-width: 1px 1px 1px 1px;
+    padding: 2px 2px 2px 2px;
+    border-style: solid solid solid solid;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+    background-color: white;
+}
+table.rackTable td 
+{
+    border-width: 1px 1px 1px 1px;
+    padding: 2px 2px 2px 2px;
+    border-style: solid solid solid solid;
+    border-color: black black black black;
+    -moz-border-radius: 0px 0px 0px 0px;
+    background-color: white;
+}
+
+.rackView
+{
+	font-size: .8em;
+}
+
+#clearing
+{
+	clear: both;
+}
+
+/* POPUP STUFF */
+
+.popup
+{
+	border: solid 1px #333;
+        font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        display: none;
+        position: absolute;
+        width: 350px;
+        z-index: 60;
+}
+
+#popuptitle
+{
+        background: blue;
+        color: white;
+        font-weight: bold;
+        height: 15px;
+        padding: 5px;
+	# width: auto;
+	float: left;
+}
+
+#popuptitleArea
+{
+	background: blue;
+}
+
+#popupCloseBox
+{
+	float: right;
+	text-align: right;
+        background: gray;
+	width: auto;
+        color: white;
+        font-weight: bold;
+        height: 15px;
+        padding: 5px;
+	border: 2px solid black;
+	font-size: 1.5em;
+}
+     
+#popupbody
+{
+        background: #ddd;
+        padding: 5px;
+        text-align: center;
+}
+
+#popup
+{
+	top: 200px;
+	left: 300px;
+}
+
+.addDeviceForm
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+.addRackPartForm
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+.commitForm
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin-bottom: 1em;
+}
