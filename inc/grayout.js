@@ -3,11 +3,10 @@
 //
 // JavaScript Functions for graying out the page (to put a popup over it)
 //
-// Time-stamp: "2008-07-01 16:42:25 jantman"
 // +----------------------------------------------------------------------+
-// | PHP EMS Tools      http://www.php-ems-tools.com                      |
+// | RackMan      http://rackman.jasonantman.com                          |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2006, 2007 Jason Antman.                               |
+// | Copyright (c) 2009 Jason Antman.                                     |
 // |                                                                      |
 // | This program is free software; you can redistribute it and/or modify |
 // | it under the terms of the GNU General Public License as published by |
@@ -26,11 +25,20 @@
 // | 59 Temple Place - Suite 330                                          |
 // | Boston, MA 02111-1307, USA.                                          |
 // +----------------------------------------------------------------------+
+// | ADDITIONAL TERMS (pursuant to GPL Section 7):                        |
+// | 1) You may not remove any of the "Author" or "Copyright" attributions|
+// |     from this file or any others distributed with this software.     |
+// | 2) If modified, you must make substantial effort to differentiate    |
+// |     your modified version from the original, while retaining all     |
+// |     attribution to the original project and authors.                 |
+// +----------------------------------------------------------------------+
 // |Please use the above URL for bug reports and feature/support requests.|
 // +----------------------------------------------------------------------+
 // | Authors: Jason Antman <jason@jasonantman.com>                        |
 // +----------------------------------------------------------------------+
-//      $Id: grayout.js,v 1.1.1.2 2008/11/02 23:09:37 jantman Exp $
+// | $LastChangedRevision::                                             $ |
+// | $HeadURL::                                                         $ |
+// +----------------------------------------------------------------------+"
 
 function grayOut(vis)
 {

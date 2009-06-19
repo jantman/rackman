@@ -32,7 +32,7 @@
 // |         Harald Radi <harald.radi@nme.at>                              |
 // +-----------------------------------------------------------------------+
 //
-// $Id: TreeMenu.js,v 1.24 2008/11/04 01:39:52 kguest Exp $
+// $Id$
 
 /**
 * Function to create copies of objects which are

@@ -3,6 +3,9 @@
 -- Host: localhost    Database: rack_mgmt
 -- ------------------------------------------------------
 -- Server version	5.0.26
+--
+-- $LastChangedRevision$
+-- $HeadURL$
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;

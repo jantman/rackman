@@ -1,6 +1,6 @@
 # makefile to update CVS and do anything else needed
 # Time-stamp: "2009-06-19 02:06:19 jantman"
-# $Id: Makefile,v 1.2 2008/11/03 04:48:57 jantman Exp $
+# $Id$
 # $Source$
 
 .PHONY: clean add
