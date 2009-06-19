@@ -2,7 +2,7 @@
 // editDevice.php
 //
 // handlers/editDevice.php
-// Time-stamp: "2009-03-05 23:25:54 jantman"
+// Time-stamp: "2009-06-19 01:47:55 jantman"
 //
 // RackMan Project
 // by Jason Antman <jason@jasonantman.com>
@@ -71,7 +71,9 @@ echo '<tr><th>Height (U)</th><td>'.$device_row['device_height_U'].'</td>'."\n";
 echo '<tr><th>OS Type</th><td>'.$device_row['odot_name'].'</td>'."\n";
 echo '<tr><th>OS Version</th><td>'.$device_row['device_os_version'].'&nbsp;</td>'."\n";
 echo '<tr><th>Rack : Top U#</th><td><a href="viewRack.php?rack_id='.$device_row['dr_rack_id'].'">'.$device_row['rack_identifier'].'</a> : '.$device_row['dr_top_U_num'].'</td></tr>';
-
+echo '<tr><th>Depth:</th><td>';
+if($device_row['device_depth_half_rack'] == 1){ echo "Half Rack";} else { echo "Full Rack";}
+echo '</td></tr>';
 
 echo '<tr><th>Status</th><td>';
 echo '<select name="statusID" id="statusID">';

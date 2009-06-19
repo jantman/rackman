@@ -22,6 +22,9 @@ function showRackTable($id)
     }
     // end status colors
 
+    //echo '<pre>';
+    //echo var_dump($rackUnits);
+    //echo '</pre>';
 
     // output the rack HTML table
     echo '<table class="rackTable">'."\n";
@@ -37,7 +40,7 @@ function showRackTable($id)
 	    $hostID = $rackUnits[1][$i];
 	    if($hosts[$hostID]['height_U'] > 1) { echo '<td rowspan="'.$hosts[$hostID]['height_U'].'" ';} else{ echo '<td ';}
 	    if($hosts[$hostID]['pending'] != 0){ echo ' style="background-color: white;">**';} else { echo ' style="background-color: #'.$statusColors[$hosts[$hostID]['status_id']].';">';}
-	    echo '<a href="viewDevice.php?id='.$hostID.'">'.$hosts[$hostID]['name'].'</a>'.'&nbsp;&nbsp;&nbsp;('.$hosts[$hostID]['mfr'].' '.$hosts[$hostID]['model'].') (<a href="editDevice.php?id='.$hostID.'">e</a> <a href="removeDeviceFromRack.php?device_id='.$hostID.'&rack_id='.$id.'">r</a> <a href="javascript:showMoveForm('.$hostID.')">m</a>)</td>';
+	    echo '<a href="viewDevice.php?id='.$hostID.'">'.$hosts[$hostID]['name'].'</a>'.'&nbsp;&nbsp;&nbsp;('.$hosts[$hostID]['mfr'].' '.$hosts[$hostID]['model'].') (<a href="handlers/editDevice.php?id='.$hostID.'">e</a> <a href="handlers/removeDeviceFromRack.php?device_id='.$hostID.'&rack_id='.$id.'">r</a> <a href="javascript:showMoveForm('.$hostID.')">m</a>)</td>';
 	    $lastHostF = $hostID;
 	}
 	elseif($rackUnits[1][$i] != -1 && $rackUnits[1][$i] == $lastHostF)
@@ -54,9 +57,8 @@ function showRackTable($id)
 	{
 	    // DO REAR SIDE
 	    echo '<td class="sideSeparator">&nbsp;</td>';
-	    if($rackUnits[1][$i] == $rackUnits[2][$i] && $hostID != $lastHostR && $lastHostR != -1)
+	    if($rackUnits[1][$i] == $rackUnits[2][$i] && $hostID != $lastHostR && $lastHostR != -1 && $rackUnits[1][$i] != -1)
 	    {
-		$hostID = $rackUnits[2][$i];
 		if($hosts[$hostID]['height_U'] > 1) { echo '<td rowspan="'.$hosts[$hostID]['height_U'].'" ';} else{ echo '<td ';}
 		if($hosts[$hostID]['pending'] != 0) { echo '" style="background-color: white;">**'; } else { echo '" style="background-color: #'.$statusColors[$hosts[$hostID]['status_id']].';">';}
 		echo '&lt; ------- </td>';
@@ -67,7 +69,7 @@ function showRackTable($id)
 		$hostID = $rackUnits[2][$i];
 		if($hosts[$hostID]['height_U'] > 1) { echo '<td rowspan="'.$hosts[$hostID]['height_U']; } else{ echo '<td ';}
 		if($hosts[$hostID]['pending'] != 0) { echo '" style="background-color: white;">**'; } else { echo '" style="background-color: #'.$statusColors[$hosts[$hostID]['status_id']].';">';}
-		echo '<a href="viewDevice.php?id='.$hostID.'">'.$hosts[$hostID]['name'].'</a>'.'&nbsp;&nbsp;&nbsp;('.$hosts[$hostID]['mfr'].' '.$hosts[$hostID]['model'].') (<a href="editDevice.php?id='.$hostID.'">e</a> <a href="removeDeviceFromRack.php?device_id='.$hostID.'&rack_id='.$id.'">r</a> <a href="javascript:showMoveForm('.$hostID.')">m</a>)</td>';
+		echo '<a href="viewDevice.php?id='.$hostID.'">'.$hosts[$hostID]['name'].'</a>'.'&nbsp;&nbsp;&nbsp;('.$hosts[$hostID]['mfr'].' '.$hosts[$hostID]['model'].') (<a href="handlers/editDevice.php?id='.$hostID.'">e</a> <a href="handlers/removeDeviceFromRack.php?device_id='.$hostID.'&rack_id='.$id.'">r</a> <a href="javascript:showMoveForm('.$hostID.')">m</a>)</td>';
 		$lastHostR = $hostID;
 	    }
 	    elseif($rackUnits[2][$i] != -1 && $rackUnits[2][$i] == $lastHostR)

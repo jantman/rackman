@@ -5,8 +5,8 @@
 // $Id$
 // $Source$
 
-require_once('config/config.php');
-require_once('inc/funcs.php.inc');
+require_once('../config/config.php');
+require_once('../inc/funcs.php.inc');
 mysql_connect() or die("Error connecting to MySQL.\n");
 mysql_select_db($dbName) or die("Error selecting MySQL database: ".$dbName."\n");
 
@@ -24,7 +24,7 @@ else
 $result = mysql_query($query) or die("Error in query: ".$query."\nError: ".mysql_error());
 if($result)
 {
-    header("Location: viewRack.php?rack_id=".$_GET['rack_id']);
+    header("Location: ../viewRack.php?rack_id=".$_GET['rack_id']);
 }
 
 

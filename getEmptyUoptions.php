@@ -23,9 +23,9 @@ if(! empty($_GET['device_id']))
     $device_id = ((int)$_GET['device_id']);
 }
 
-if(! empty($_GET['partSide']))
+if(! empty($_GET['side']))
 {
-    $side = ((int)$_GET['partSide']);
+    $side = ((int)$_GET['side']);
 }
 else
 {
@@ -48,6 +48,8 @@ require_once('inc/funcs.php.inc');
 mysql_connect() or die("Error connecting to MySQL.\n");
 mysql_select_db($dbName) or die("Error selecting MySQL database: ".$dbName."\n");
 
+error_log("getEmptyUoptions: rack_id=".$rack_id." heightU=".$heightU." device_id=".$device_id." partSide=".$side." partheight=".$partheight."\n"); // DEBUG
+
 if($device_id != -1)
 {
     // get the height for this device
@@ -58,6 +60,13 @@ if($device_id != -1)
 }
 
 $rackSpaces = getRUtoHosts($rack_id);
+
+error_log("getEmptyUoptions: heightU=".$heightU."\n"); // DEBUG
+error_log($_SERVER["REQUEST_URI"]); // DEBUG
+
+//echo '<pre>';
+//echo var_dump($rackSpaces); // DEBUG
+//echo '</pre>';
 
 echo '<select name="top_U_num" id="top_U_num">';
 for($i = count($rackSpaces[1]); $i > 0; $i--)
@@ -76,13 +85,15 @@ for($i = count($rackSpaces[1]); $i > 0; $i--)
 	}
 	else
 	{
+	    echo "\ni=$i open=$open<br />\n"; // DEBUG
 	    // make sure we have contiguous empty spaces
 	    $contiguous = true;
 	    for($x = $i; $x > ($i - $heightU); $x--)
 	    {
+		echo "\nside=$side x=$x rackSpaces[1][x]=".$rackSpaces[1][$x]." rackSpaces[2][x]=".$rackSpaces[2][$x]; // DEBUG
 		if($side == 0)
 		{
-		    if($rackSpaces[1][$x] != -1 && $rackSpaces[1][$x] != $device_id && $rackSpaces[2][$x] != -1 && $rackSpaces[2][$x] != $device_id){ $contiguous = false;}
+		    if(($rackSpaces[1][$x] != -1 && $rackSpaces[1][$x] != $device_id) || ($rackSpaces[2][$x] != -1 && $rackSpaces[2][$x] != $device_id)){ $contiguous = false;}
 		}
 		elseif($side == 1)
 		{
@@ -101,9 +112,11 @@ for($i = count($rackSpaces[1]); $i > 0; $i--)
     }
 }
 
+echo '</select>';
+
 if(! isset($_GET['height']))
 {
-    echo '<input type="submit" value="Add">';
+    echo '  <input type="submit" value="Add">';
 }
-echo '</select>';
+
 ?>

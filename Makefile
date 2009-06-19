@@ -1,27 +1,26 @@
 # makefile to update CVS and do anything else needed
-# Time-stamp: "2009-02-22 01:02:20 jantman"
+# Time-stamp: "2009-06-19 02:06:19 jantman"
 # $Id: Makefile,v 1.2 2008/11/03 04:48:57 jantman Exp $
 # $Source$
 
-ifdef LOGSTR
-        LOG = $(LOGSTR)
-else
-        LOG = just working on things.
-endif
+.PHONY: clean add
 
-ifdef TAG
-	TAGSTR = $(TAG)
-else
-	TAGSTR = main
-endif
+clean:
+	\rm -f *~
+	\rm -f inc/*~
+	\rm -f handlers/*~
+	\rm -f admin/*~
+	\rm -f bin/*~
+	\rm -f config/*~
+	\rm -f help/*~
+	\rm -f images/*~
 
-cvsupdate:
-	-rm *~
-	-cd admin/ && rm *~
-	-cd bin/ && rm *~
-	-cd config/ && rm *~
-	-cd handlers/ && rm *~
-	-cd help/ && rm *~
-	-cd images/ && rm *~
-	-cd inc/ && rm *~
-	cvs import -m "$(LOG)" rack-mgmt jantman "$(TAGSTR)"
+add:
+	\svn add *.*
+	\svn add inc/*.*
+	\svn add handlers/*.*
+	\svn add admin/*.*
+	\svn add bin/*.*
+	\svn add config/*.*
+	\svn add help/*.*
+	\svn add images/*.*

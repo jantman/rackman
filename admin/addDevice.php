@@ -2,7 +2,7 @@
 // admin/addDevice.php
 //
 // script to add a device
-// Time-stamp: "2009-02-18 14:12:26 jantman"
+// Time-stamp: "2009-06-18 23:26:57 jantman"
 //
 // Rack Management Project
 // by Jason Antman <jason@jasonantman.com>
@@ -38,7 +38,7 @@ if(isset($_POST) && isset($_POST['name']))
     if(trim($_POST['model']) != "") { $query .= ",device_model='".mysql_real_escape_string($_POST['model'])."'";}
     $query .= ",device_height_U=".((int)$_POST['height_U']);
     if(trim($_POST['os_version']) != "") { $query .= ",device_os_version='".mysql_real_escape_string($_POST['os_version'])."'";}
-    $query .= ",device_status_id=".((int)$_POST['status']).";";
+    $query .= ",device_status_id=".((int)$_POST['status']).",device_depth_half_rack=".((int)$_POST['depth']).";";
     $result = mysql_query($query) or die("Error in query: ".$query."\nError: ".mysql_error());
     if($result)
     {
@@ -80,6 +80,11 @@ else
     echo '<div><label for="height_U"><strong>Height (U):</strong></label> <select name="height_U" id="height_U">';
     echo '<option value="-1">&nbsp;&nbsp;</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>';
     echo '</select></div>';
+
+    echo '<div><label for="depth"><strong>Depth:</strong></label> ';
+    echo '<select name="depth"><option value="0" selected="selected">Full Rack</option><option value="1">Half Rack</option>';
+    echo '</select>'."\n";
+
 
     // status
     echo '<div><label for="status"><strong>Status:</strong></label> <select name="status">';

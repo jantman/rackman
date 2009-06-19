@@ -3,7 +3,7 @@
 //
 // JavaScript/DHTML functions for rack
 //
-// Time-stamp: "2009-06-18 20:37:42 jantman"
+// Time-stamp: "2009-06-19 02:01:56 jantman"
 // $Id$
 // $Source$
 
@@ -154,20 +154,30 @@ function updateUoptions(rack_id)
 {
   if(document.getElementById("device_id").value != -1)
     {
-      reloadUoptions(rack_id, document.getElementById("device_id").value, 0);
+      //alert("updateUoptions: "+rack_id); // DEBUG
+      reloadUoptions(rack_id, document.getElementById("device_id").value, 0, 0);
     }
   //reloadUoptions(height);
 }
 
-function reloadUoptions(rack_id, device_id, height)
+function reloadUoptions(rack_id, device_id, height, isPart)
 {
-  if(height == 0)
+  if(isPart == 1)
     {
-      http.open('get', "getEmptyUoptions.php?rack_id="+rack_id+"&device_id="+device_id);
+      var side = document.getElementById("partSide").value;
     }
   else
     {
-      http.open('get', "../getEmptyUoptions.php?rack_id="+document.getElementById("rack").value+"&height="+height);
+      var side = document.getElementById("deviceSide").value;
+    }
+  
+    if(height == 0)
+    {
+      http.open('get', "getEmptyUoptions.php?rack_id="+rack_id+"&device_id="+device_id+"&side="+side);
+    }
+    else
+    {
+      http.open('get', "../getEmptyUoptions.php?rack_id="+document.getElementById("rack").value+"&height="+height+"&side="+side);
     }
   http.onreadystatechange = handleReloadUoptions; 
   http.send(null);
@@ -187,6 +197,45 @@ function handleReloadUoptions()
 //
 
 //
+// Update Side options
+//
+
+function updateSideOptions(rack_id)
+{
+  if(document.getElementById("device_id").value != -1)
+    {
+      reloadSideOptions(rack_id, document.getElementById("device_id").value);
+    }
+}
+
+function reloadSideOptions(rack_id, device_id)
+{
+  http.open('get', "getEmptySideOptions.php?device_id="+device_id+"&rack_id="+rack_id);
+  //alert("getEmptySideOptions.php?device_id="+device_id+"&rack_id="+rack_id);
+  http.onreadystatechange = handleReloadSideOptions; 
+  http.send(null);
+}
+
+function handleReloadSideOptions()
+{
+	if(http.readyState == 4)
+	{
+	  var response = http.responseText;
+	  document.getElementById("deviceSideSpan").innerHTML = response;
+	  var rack_id = document.getElementById("rackID").value;
+	  if(response.indexOf('<option value="0">Full Depth</option></select>') != -1)
+	    {
+	      //alert("CALLING updateUoptions: "+rack_id); // DEBUG
+	      updateUoptions(rack_id);
+	    }
+	}
+}
+
+//
+// END Update Side Options
+//
+
+//
 // AddRackPart U options
 //
 
@@ -201,7 +250,7 @@ function updateRackPart(rack_id)
     }
   else
     {
-      http.open('get', "getEmptyUoptions.php?rack_id="+rack_id+"&partheight="+height+"&partSide="+side);
+      http.open('get', "getEmptyUoptions.php?rack_id="+rack_id+"&partheight="+height+"&side="+side);
       http.onreadystatechange =  handleReloadRackPartOptions; 
       http.send(null);
     }

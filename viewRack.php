@@ -2,7 +2,7 @@
 // index.php
 //
 // main index page
-// Time-stamp: "2009-06-18 20:33:17 jantman"
+// Time-stamp: "2009-06-19 00:11:45 jantman"
 //
 // Rack Management Project
 // by Jason Antman <jason@jasonantman.com>
@@ -44,9 +44,9 @@ if(isset($_GET['rack_id']))
     // BEGIN add Device form
     echo '<div class="addDeviceForm">'."\n";
     echo '<form name="addDevice" method="POST" action="handlers/addToRack.php">'."\n";
-    echo '<input type="hidden" name="rackID" value="'.$id.'" />'."\n";
+    echo '<input type="hidden" name="rackID" id="rackID" value="'.$id.'" />'."\n";
     echo '<strong>Add Device to this Rack:</strong> ';
-    echo '<select name="device_id" id="device_id" onChange="javascript:updateUoptions('.$id.')">';
+    echo '<select name="device_id" id="device_id" onChange="javascript:updateSideOptions('.$id.')">';
     // show the available devices
     echo '<option value="-1"> </option>';
     $query = "SELECT d.device_id,d.device_name,d.device_height_U,d.device_mfr,d.device_model FROM devices AS d LEFT JOIN devices_rack AS dr ON d.device_id=dr.dr_device_id WHERE dr.dr_rack_id IS NULL;";
@@ -57,7 +57,12 @@ if(isset($_GET['rack_id']))
     }
     // end showing available devices
     echo '</select>';
+    // select for side
+    // TODO - This needs to be validated for the device...
+    echo ' <strong>Side: </strong><span id="deviceSideSpan"></span>';
+    // end select for side
     echo ' <strong>Top U:</strong> <span id="topUspan"></span>';
+    echo ' <input type="reset" value="Reset" />';
     echo '</form>'."\n";
     echo '</div> <!-- End addDeviceForm DIV -->'."\n";
     // END add device form
@@ -88,7 +93,7 @@ if(isset($_GET['rack_id']))
     echo '</select>';
     // end select for status
     // select for side
-    echo '<strong>Side: </strong><select name="partSide" id="partSide"><option value="0">Full Depth</option><option value="1" selected="selected">Front</option><option value="2">Rear</option></select>';
+    echo ' <strong>Side: </strong><select name="partSide" id="partSide"><option value="0">Full Depth</option><option value="1" selected="selected">Front</option><option value="2">Rear</option></select>';
     // end select for side
     // select for height
     echo '<strong>Height: </strong><select name="heightU" id="heightU" onChange="javascript:updateRackPart('.$id.')"><strong>U</strong>'."\n";
