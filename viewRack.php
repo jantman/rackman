@@ -2,7 +2,7 @@
 // index.php
 //
 // main index page
-// Time-stamp: "2009-03-06 00:01:39 jantman"
+// Time-stamp: "2009-06-18 20:33:17 jantman"
 //
 // Rack Management Project
 // by Jason Antman <jason@jasonantman.com>
@@ -87,11 +87,15 @@ if(isset($_GET['rack_id']))
     }
     echo '</select>';
     // end select for status
+    // select for side
+    echo '<strong>Side: </strong><select name="partSide" id="partSide"><option value="0">Full Depth</option><option value="1" selected="selected">Front</option><option value="2">Rear</option></select>';
+    // end select for side
     // select for height
     echo '<strong>Height: </strong><select name="heightU" id="heightU" onChange="javascript:updateRackPart('.$id.')"><strong>U</strong>'."\n";
     echo '<option value="0"> </option>';
     for($i = 1; $i < 11; $i++){ echo '<option value="'.$i.'">'.$i.'</option>';}
     echo '</select>'."\n";
+    // end select for height
     echo ' <strong>Top U:</strong> <span id="rackPartTopUspan"></span>'; // span will be updated via JS/DHTML
     echo '<INPUT TYPE="RESET">'."\n";
     echo '</form>'."\n";
@@ -130,46 +134,11 @@ if(isset($_GET['rack_id']))
     $hosts = getHosts($id);
     $rackUnits = getRUtoHosts($id);
 
+    require_once('inc/rackTable.php.inc');
     // output the rack HTML table
-    echo '<div id="rackTableDiv"><table class="rackTable">'."\n";
-    $lastHost = -1;
-    for($i = $rack_height; $i > 0; $i--)
-    {
-	if($rackUnits[$i] != -1 && $rackUnits[$i] != $lastHost)
-	{
-	    echo '<tr><th>'.$i.'</th>';
-	    $hostID = $rackUnits[$i];
-	    if($hosts[$hostID]['height_U'] > 1)
-	    {
-		echo '<td rowspan="'.$hosts[$hostID]['height_U'].'" style="background-color: #'.$statusColors[$hosts[$hostID]['status_id']].';">';
-	    }
-	    else
-	    {
-		echo '<td style="background-color: #'.$statusColors[$hosts[$hostID]['status_id']].';">';
-	    }
-	    echo '<a href="viewDevice.php?id='.$hostID.'">';
-	    if($hosts[$hostID]['pending'] != 0){ echo "** ";}
-	    echo $hosts[$hostID]['name'].'</a>'.'&nbsp;&nbsp;&nbsp;';
-	    if($hosts[$hostID]['mfr'] != "" || $hosts[$hostID]['model'] != "")
-	    {
-		echo '('.$hosts[$hostID]['mfr'].' '.$hosts[$hostID]['model'].')';
-	    }
-	    echo '(<a href="handlers/editDevice.php?id='.$hostID.'&rackID='.$id.'">e</a> <a href="handlers/removeDeviceFromRack.php?rack_id='.$id.'&device_id='.$hostID.'">r</a> <a href="javascript:showMoveForm('.$hostID.')">m</a>)';
-	    echo '</td></tr>'."\n";
-	    $lastHost = $hostID;
-	}
-	elseif($rackUnits[$i] != -1 && $rackUnits[$i] == $lastHost)
-	{
-	    echo '<tr><th>'.$i.'</th></tr>'."\n";
-	}
-	else
-	{
-	    // open space
-	    echo '<tr><th>'.$i.'</th><td style="background-color: #CCCCCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>'."\n";
-	}
-    }
-
-    echo '</table>'."\n".'</div> <!-- end rackTableDiv DIV -->'."\n".'</div> <!-- END rackView DIV -->'."\n";
+    echo '<div id="rackTableDiv">'."\n";
+    showRackTable($id);
+    echo '</div> <!-- end rackTableDiv DIV -->'."\n".'</div> <!-- END rackView DIV -->'."\n";
 
     echo '<br />'.$statusTable."\n";
 }

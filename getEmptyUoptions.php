@@ -23,6 +23,15 @@ if(! empty($_GET['device_id']))
     $device_id = ((int)$_GET['device_id']);
 }
 
+if(! empty($_GET['partSide']))
+{
+    $side = ((int)$_GET['partSide']);
+}
+else
+{
+    $side = 0;
+}
+
 if(! empty($_GET['partheight']))
 {
     $device_id = -1;
@@ -48,11 +57,18 @@ if($device_id != -1)
     $heightU = $row['device_height_U'];
 }
 
-echo '<select name="top_U_num" id="top_U_num">';
 $rackSpaces = getRUtoHosts($rack_id);
-for($i = count($rackSpaces); $i > 0; $i--)
+
+echo '<select name="top_U_num" id="top_U_num">';
+for($i = count($rackSpaces[1]); $i > 0; $i--)
 {
-    if($rackSpaces[$i] == -1)
+
+    $open = false;
+    if($side == 0) {  if($rackSpaces[1][$i] == -1 && $rackSpaces[2][$i] == -1) { $open = true;}  }
+    elseif($side == 1){  if($rackSpaces[1][$i] == -1) { $open = true;} }
+    else{  if($rackSpaces[2][$i] == -1) { $open = true;} }
+
+    if($open)
     {
 	if($heightU == 1)
 	{
@@ -64,7 +80,18 @@ for($i = count($rackSpaces); $i > 0; $i--)
 	    $contiguous = true;
 	    for($x = $i; $x > ($i - $heightU); $x--)
 	    {
-		if($rackSpaces[$x] != -1 && $rackSpaces[$x] != $device_id){ $contiguous = false;}
+		if($side == 0)
+		{
+		    if($rackSpaces[1][$x] != -1 && $rackSpaces[1][$x] != $device_id && $rackSpaces[2][$x] != -1 && $rackSpaces[2][$x] != $device_id){ $contiguous = false;}
+		}
+		elseif($side == 1)
+		{
+		    if($rackSpaces[1][$x] != -1 && $rackSpaces[1][$x] != $device_id){ $contiguous = false;}
+		}
+		else
+		{
+		    if($rackSpaces[2][$x] != -1 && $rackSpaces[2][$x] != $device_id){ $contiguous = false;}
+		}
 	    }
 	    if($contiguous)
 	    {

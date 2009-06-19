@@ -15,6 +15,7 @@ $rackID = (int)$_POST['rackID'];
 $height = (int)$_POST['heightU'];
 $topU = (int)$_POST['top_U_num'];
 $statusID = (int)$_POST['statusID'];
+$side = (int)$_POST['partSide'];
 
 // get type name and class ID for this type
 $query = "SELECT * FROM opt_device_types WHERE odt_id=".$typeID.";";
@@ -23,11 +24,16 @@ $row = mysql_fetch_assoc($result);
 $typeName = $row['odt_name'];
 $classID = $row['odt_class_id'];
 
-$query = "INSERT INTO devices SET device_class_id=".$classID.",device_type_id=".$typeID.",device_name='".$typeName."',device_height_U=".$height.",device_status_id=".$statusID.";";
+$query = "INSERT INTO devices SET device_class_id=".$classID.",device_type_id=".$typeID.",device_name='".$typeName."',device_height_U=".$height.",device_status_id=".$statusID;
+if($side != 0)
+{
+    $query .= ",device_depth_half_rack=1";
+}
+$query .= ";";
 $result = mysql_query($query) or die("Error in query: ".$query."\nError: ".mysql_error());
 $deviceID = mysql_insert_id();
 
-$query = "INSERT INTO devices_rack SET dr_device_id=".$deviceID.",dr_rack_id=".$rackID.",dr_top_U_num=".$topU.",dr_pending_status=1;";
+$query = "INSERT INTO devices_rack SET dr_device_id=".$deviceID.",dr_rack_id=".$rackID.",dr_top_U_num=".$topU.",dr_pending_status=1,dr_rack_side=".$side.";";
 $result = mysql_query($query) or die("Error in query: ".$query."\nError: ".mysql_error());
 if($result)
 {

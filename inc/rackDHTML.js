@@ -3,7 +3,7 @@
 //
 // JavaScript/DHTML functions for rack
 //
-// Time-stamp: "2009-04-28 22:05:24 jantman"
+// Time-stamp: "2009-06-18 20:37:42 jantman"
 // $Id$
 // $Source$
 
@@ -193,14 +193,15 @@ function handleReloadUoptions()
 function updateRackPart(rack_id)
 {
   var height = document.getElementById("heightU").value;
-
+  var side = document.getElementById("partSide").value;
+  
   if(height == 0)
     {
       alert("Please select a height for the rack part.")
     }
   else
     {
-      http.open('get', "getEmptyUoptions.php?rack_id="+rack_id+"&partheight="+height);
+      http.open('get', "getEmptyUoptions.php?rack_id="+rack_id+"&partheight="+height+"&partSide="+side);
       http.onreadystatechange =  handleReloadRackPartOptions; 
       http.send(null);
     }

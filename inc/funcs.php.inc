@@ -2,7 +2,7 @@
 
 function getHosts($rackID)
 {
-    $query = "SELECT dr.dr_device_id,dr.dr_top_U_num,dr.dr_pending_status,d.device_id,d.device_name,d.device_mfr,d.device_model,d.device_height_U,d.device_status_id,s.ods_name FROM devices_rack AS dr LEFT JOIN devices AS d ON d.device_id=dr.dr_device_id LEFT JOIN opt_device_statuses AS s ON d.device_status_id=s.ods_id WHERE dr.dr_rack_id=".$rackID." ORDER BY dr.dr_top_U_num DESC;";
+    $query = "SELECT dr.dr_device_id,dr.dr_top_U_num,dr.dr_pending_status,d.device_id,d.device_name,d.device_mfr,d.device_model,d.device_height_U,d.device_status_id,d.device_depth_half_rack,s.ods_name FROM devices_rack AS dr LEFT JOIN devices AS d ON d.device_id=dr.dr_device_id LEFT JOIN opt_device_statuses AS s ON d.device_status_id=s.ods_id WHERE dr.dr_rack_id=".$rackID." ORDER BY dr.dr_top_U_num DESC;";
     $result = mysql_query($query) or die("Error in query: ".$query."\nError: ".mysql_error());
     
     $hosts = array(); // array to hold the host info
@@ -10,7 +10,7 @@ function getHosts($rackID)
     // populate arrays with all of the info
     while($row = mysql_fetch_assoc($result))
     {
-	$temp = array("name" => $row['device_name'], "mfr" => $row['device_mfr'], "model" => $row['device_model'], "height_U" => $row['device_height_U'], "status" => $row['ods_name'], "status_id" => $row['device_status_id'], "pending" => $row['dr_pending_status']);
+	$temp = array("name" => $row['device_name'], "mfr" => $row['device_mfr'], "model" => $row['device_model'], "height_U" => $row['device_height_U'], "status" => $row['ods_name'], "status_id" => $row['device_status_id'], "pending" => $row['dr_pending_status'], "depth" => $row['device_depth_half_rack']);
 	// 	$rackUnits[$row['dr_top_U_num']] = $row['dr_device_id'];
 	$hosts[$row['device_id']] = $temp;
     }
@@ -20,7 +20,7 @@ function getHosts($rackID)
 // returns an array of rack U spaces to Host IDs, -1 if empty
 function getRUtoHosts($rackID)
 {
-    $rackUnits = array(); // array to hold what's in each of the rack units
+    $rackUnits = array(1 => array(), 2 => array()); // array to hold what's in each of the rack units
 
     // get the rack height
     $query = "SELECT ra.rack_id,ra.rack_height_U FROM racks AS ra WHERE ra.rack_id=".$rackID.";";
@@ -31,10 +31,11 @@ function getRUtoHosts($rackID)
     // populate the array with placeholder entries for each U
     for($i = $rack_height; $i > 0; $i--)
     {
-	$rackUnits[$i] = -1; // placeholder
+	$rackUnits[1][$i] = -1; // placeholder
+	$rackUnits[2][$i] = -1; // placeholder
     }
 
-    $query = "SELECT dr.dr_device_id,dr.dr_top_U_num,d.device_height_U FROM devices_rack AS dr LEFT JOIN devices AS d ON d.device_id=dr.dr_device_id WHERE dr.dr_rack_id=".$rackID." AND (dr_pending_status=0 OR dr_pending_status=1) ORDER BY dr.dr_top_U_num DESC;";
+    $query = "SELECT dr.dr_device_id,dr.dr_top_U_num,d.device_height_U,dr.dr_rack_side FROM devices_rack AS dr LEFT JOIN devices AS d ON d.device_id=dr.dr_device_id WHERE dr.dr_rack_id=".$rackID." AND (dr_pending_status=0 OR dr_pending_status=1) ORDER BY dr.dr_top_U_num DESC;";
     $result = mysql_query($query) or die("Error in query: ".$query."\nError: ".mysql_error());
     
     // populate arrays with all of the info
@@ -42,7 +43,9 @@ function getRUtoHosts($rackID)
     {
 	for($i = $row['dr_top_U_num']; $i > ($row['dr_top_U_num'] - $row['device_height_U']); $i--)
 	{
-	    $rackUnits[$i] = $row['dr_device_id'];
+	    if($row['dr_rack_side'] == 0){ $rackUnits[1][$i] = $row['dr_device_id']; $rackUnits[2][$i] = $row['dr_device_id']; }
+	    elseif($row['dr_rack_side'] == 1) { $rackUnits[1][$i] = $row['dr_device_id']; }
+	    elseif($row['dr_rack_side'] == 2) { $rackUnits[2][$i] = $row['dr_device_id']; }
 	}
     }
     return $rackUnits;
