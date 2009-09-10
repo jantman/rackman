@@ -146,7 +146,7 @@ class com_jasonantman_SwitchSNMP_CatOS
 		snmp_set_valueretrieval(SNMP_VALUE_PLAIN);
 		$myIF['CISCO-modIndex'] = snmpget($this->IP, $this->rocommunity, ".1.3.6.1.4.1.9.5.1.4.1.1.1.".$StackMibIndex[$idx]); // CISCO-STACK-MIB::portModuleIndex
 		$myIF['CISCO-portIndex'] = snmpget($this->IP, $this->rocommunity, ".1.3.6.1.4.1.9.5.1.4.1.1.2.".$StackMibIndex[$idx]); // CISCO-STACK-MIB::portIndex
-		$myIF['CISCO-portName'] = snmpget($this->IP, $this->rocommunity, ".1.3.6.1.4.1.9.5.1.4.1.1.4.".$StackMibIndex[$idx]); // CISCO-STACK-MIB::portName
+		$myIF['CISCO-portName'] = snmpget($this->IP, $this->rocommunity, ".1.3.6.1.4.1.9.5.1.4.1.1.4.2.".$idx); // CISCO-STACK-MIB::portName
 		$temp = snmpget($this->IP, $this->rocommunity, ".1.3.6.1.4.1.9.5.1.4.1.1.5.".$StackMibIndex[$idx]);
 		$myIF['CISCO-portType'] = $this->CISCO_STACK_MIB_portType[$temp]; // CISCO-STACK-MIB::portType
 
